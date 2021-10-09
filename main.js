@@ -14,11 +14,31 @@ var isScrolling
 
 var currentActiveMenu = menu.querySelector(`.domov`)
 let clickedMenuItem = menu.querySelector(`.domov`)
+let activeMenu = menu.querySelector(`.domov`)
+let isClicked;
+
+const addBlackBorderToActive = () => {
+  currentActiveMenu.classList.add('border-transparent')
+  currentActiveMenu.classList.remove('border-black')
+  activeMenu.classList.remove('border-transparent')
+  activeMenu.classList.add('border-black')
+}
 
 // add listener to each menu item
 menuItems.forEach((menuButton) => {
   menuButton.addEventListener('click', (event) => {
     clickedMenuItem = event.target.closest('li')
+    activeMenu = clickedMenuItem
+
+    // this blocks to execute the setTimeout function
+    // clearing the setTimeout timer
+    window.clearTimeout(isClicked)
+
+    // Set a timeout to run after scrolling ends
+    isClicked = setTimeout(function () {
+      addBlackBorderToActive()
+      currentActiveMenu = activeMenu
+    }, 50)
   })
 })
 
@@ -33,7 +53,7 @@ window.addEventListener(
         najlepsie = el
       }
     })
-    let activeMenu = menu.querySelector(`.${najlepsie.id}`)
+    activeMenu = menu.querySelector(`.${najlepsie.id}`)
 
     // fix for marking checked category if scroll not possible
     // get li element index which emitted the event
@@ -43,15 +63,6 @@ window.addEventListener(
     const indexScroll = [...menu.getElementsByTagName('li')].findIndex(
       (item) => item === currentActiveMenu
     )
-    console.log({ IndexClickedMenuItem })
-    console.log({ indexScroll })
-
-    const addBlackBorderToActive = () => {
-      currentActiveMenu.classList.add('border-transparent')
-      currentActiveMenu.classList.remove('border-black')
-      activeMenu.classList.remove('border-transparent')
-      activeMenu.classList.add('border-black')
-    }
     addBlackBorderToActive()
 
     currentActiveMenu = activeMenu
@@ -67,6 +78,7 @@ window.addEventListener(
       }
       addBlackBorderToActive()
       currentActiveMenu = activeMenu
+      clickedMenuItem = menu.querySelector(`.domov`)
     }, 50)
   },
   false
