@@ -13,7 +13,7 @@ jobs:
         uses: burnett01/rsync-deployments@5.1
         with:
           switches: -avzr --delete --no-o --no-g
-          path: /
+          path: src/
           remote_path: /data1/TP/web
           remote_host: ${{ secrets.HOST }}
           remote_user: ${{ secrets.USERNAME }}
