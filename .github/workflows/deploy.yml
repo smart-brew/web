@@ -1,7 +1,12 @@
 name: Deploy to team06-21.studenti.fiit.stuba.sk
 
 on:
+  # listen to manual trigger
   workflow_dispatch:
+
+  # listen to push
+  push:
+    branches: [main]
 
 jobs:
   deploy:
