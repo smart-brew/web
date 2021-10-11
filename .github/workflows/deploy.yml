@@ -1,0 +1,22 @@
+
+name: Deploy to team06-21.studenti.fiit.stuba.sk
+
+on:
+  workflow_dispatch:
+    
+jobs:
+  deploy:
+    name: Setup ubuntu
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Executing remote ssh commands using ssh key
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.PORT }}
+        script: |
+          cd /
+          ls -la
