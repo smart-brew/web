@@ -21,7 +21,7 @@ jobs:
         uses: burnett01/rsync-deployments@5.1
         with:
           switches: -Pav -O --no-perms --exclude=".git" --exclude="docs" --delete
-          remote_path: /data1/TP/web
+          remote_path: ~/web
           remote_host: ${{ secrets.HOST }}
           remote_user: ${{ secrets.USERNAME }}
           remote_key: ${{ secrets.KEY }}
