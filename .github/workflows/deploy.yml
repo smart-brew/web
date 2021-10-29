@@ -1,0 +1,27 @@
+name: Deploy to team06-21.studenti.fiit.stuba.sk
+
+on:
+  # listen to manual trigger
+  workflow_dispatch:
+
+  # listen to push
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    name: Run deployment
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout latest code
+        uses: actions/checkout@v2
+
+      - name: Rsync deployments
+        uses: burnett01/rsync-deployments@5.1
+        with:
+          switches: -Pav -O --no-perms --exclude=".git" --exclude="docs" --delete
+          remote_path: ~/web
+          remote_host: ${{ secrets.HOST }}
+          remote_user: ${{ secrets.USERNAME }}
+          remote_key: ${{ secrets.KEY }}
