@@ -2,6 +2,10 @@ html {
   scroll-behavior: smooth;
   transition: ease 200ms all;
 }
+body {
+  font-family: system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+}
+
 p {
   font-size: calc(1rem + 0.3vw);
 }
@@ -40,3 +44,18 @@ body::-webkit-scrollbar-thumb {
   background-color: #464646;
   border: 3px solid #464646;
 } */
+
+.link {
+  font-size: calc(1rem + 0.3vw);
+  text-decoration: none;
+
+  background-color: rgba(255, 252, 213, 0.801);
+
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.link:hover {
+  cursor: pointer;
+  background-color: rgba(255, 249, 166, 0.801);
+  border-bottom-color: #1a1a1a;
+}
