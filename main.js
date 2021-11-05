@@ -1,20 +1,20 @@
 const menu = document.querySelector('.menu');
 const menuItems = [...menu.getElementsByTagName('a')];
 
-const domov = document.getElementById('domov');
-const projekt = document.getElementById('projekt');
-const clenovia = document.getElementById('clenovia');
-const milniky = document.getElementById('milniky');
-const casova_os = document.getElementById('casova-os');
-const dokumenty = document.getElementById('dokumenty');
+const home = document.getElementById('home');
+const project = document.getElementById('project');
+const members = document.getElementById('members');
+const milestones = document.getElementById('milestones');
+const timeline = document.getElementById('timeline');
+const documents = document.getElementById('documents');
 
-const pole = [domov, projekt, clenovia, milniky, casova_os, dokumenty];
+const headingsArray = [home, project, members, milestones, timeline, documents];
 // variable for scrolling detection
 var isScrolling;
 
-var currentActiveMenu = menu.querySelector(`.domov`);
-let clickedMenuItem = menu.querySelector(`.domov`);
-let activeMenu = menu.querySelector(`.domov`);
+var currentActiveMenu = menu.querySelector(`.home`);
+let clickedMenuItem = menu.querySelector(`.home`);
+let activeMenu = menu.querySelector(`.home`);
 let isClicked;
 
 const addBlackBorderToActive = () => {
@@ -42,44 +42,41 @@ menuItems.forEach((menuButton) => {
   });
 });
 
-window.addEventListener(
-  'scroll',
-  (event) => {
-    var najlepsie = domov;
-    pole.forEach((el) => {
-      const elY = el.getBoundingClientRect().y;
-      const najlepsieY = domov.getBoundingClientRect().y;
-      if (elY < 10 && elY > najlepsieY) {
-        najlepsie = el;
-      }
-    });
-    activeMenu = menu.querySelector(`.${najlepsie.id}`);
+window.addEventListener('scroll', (event) => {
+  var bestHeading = home;
+  headingsArray.forEach((el) => {
+    const elY = el.getBoundingClientRect().y;
+    const targetY = home.getBoundingClientRect().y;
+    if (elY < 250 && elY > targetY) {
+      bestHeading = el;
+    }
+  });
+  activeMenu = menu.querySelector(`.${bestHeading.id}`);
 
-    // fix for marking checked category if scroll not possible
-    // get li element index which emitted the event
-    const IndexClickedMenuItem = [...menu.getElementsByTagName('li')].findIndex(
-      (item) => item === clickedMenuItem
-    );
-    const indexScroll = [...menu.getElementsByTagName('li')].findIndex(
-      (item) => item === currentActiveMenu
-    );
+  // fix for marking checked category if scroll not possible
+  // get li element index which emitted the event
+  const indexClickedMenuItem = [...menu.getElementsByTagName('li')].findIndex(
+    (item) => item === clickedMenuItem
+  );
+  const indexScroll = [...menu.getElementsByTagName('li')].findIndex(
+    (item) => item === currentActiveMenu
+  );
+  addBlackBorderToActive();
+
+  currentActiveMenu = activeMenu;
+  // return;
+
+  // this blocks to execute the setTimeout function
+  // clearing the setTimeout timer
+  window.clearTimeout(isScrolling);
+
+  // Set a timeout to run after scrolling ends
+  isScrolling = setTimeout(function () {
+    if (indexClickedMenuItem > indexScroll) {
+      activeMenu = clickedMenuItem;
+    }
     addBlackBorderToActive();
-
     currentActiveMenu = activeMenu;
-
-    // this blocks to execute the setTimeout function
-    // clearing the setTimeout timer
-    window.clearTimeout(isScrolling);
-
-    // Set a timeout to run after scrolling ends
-    isScrolling = setTimeout(function () {
-      if (IndexClickedMenuItem > indexScroll) {
-        activeMenu = clickedMenuItem;
-      }
-      addBlackBorderToActive();
-      currentActiveMenu = activeMenu;
-      clickedMenuItem = menu.querySelector(`.domov`);
-    }, 50);
-  },
-  false
-);
+    clickedMenuItem = menu.querySelector(`.home`);
+  }, 50);
+});
